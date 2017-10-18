@@ -1,0 +1,25 @@
+
+.kansorc
+config.php
+*~
+*.lock
+*.DS_Store
+.*.swp
+*.out
+emailadressen
+cache
+mytoken.json
+node_modules
+
+!.gitignore
+
+.config.json
+.config.js
+
+.npmrc
+
+#sofaapp/packages #repo is down so checkin dependencies
+#!sofaapp/packages/**/node_modules
+logs/
+
+*.token.json

@@ -1,0 +1,13 @@
+;usage from package.json config
+;in js: process.env.npm_package_config_port
+;in json: ${npm_package_config_demo}
+
+;usage from .npmrc
+;in js: process.env.npm_config_port
+;in json: ${npm_config_demo}
+
+loglevel=silent
+client=API TOKEN
+secret=API SECRET
+
+;todo sample app + config
