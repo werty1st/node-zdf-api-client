@@ -7,7 +7,10 @@
 ;in json: ${npm_config_demo}
 
 loglevel=silent
-client=API TOKEN
-secret=API SECRET
+#confl https://jira.foo.de/
+#api https://developer.bar.de/
+apiclient=XXXX
+apisecret=YYYYYYY
+apihost=api.foobar.de
 
-;todo sample app + config
+
