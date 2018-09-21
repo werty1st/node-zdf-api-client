@@ -55,3 +55,12 @@ async function downloadUrl(url){
 ```javascript
 zdfapi.once("token-ready",zdfapi.stopTokenRefreshTask);
 ```
+
+
+# Test
+
+```bash
+npm test
+```
+
+![Run test output](test.gif)
