@@ -7,10 +7,6 @@
 ;in json: ${npm_config_demo}
 
 loglevel=silent
-#confl https://jira.foo.de/
-#api https://developer.bar.de/
 apiclient=XXXX
 apisecret=YYYYYYY
-apihost=api.foobar.de
-
-
+apihost=api.host.de

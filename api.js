@@ -8,14 +8,14 @@ const EventEmitter = require('events');
 
 const winston = require('winston');
 
-const log = global.log = new (winston.Logger)({
+const log = new (winston.Logger)({
     exitOnError: true,
     transports: [
-      new (winston.transports.Console)({colorize: true, level: process.env.logLevel })
+      new (winston.transports.Console)({colorize: true, level: process.env.logLevel || "error" })
     ]
   });
 
-const useragentstring = process.env.npm_package_config_useragent;
+const USERAGENT = process.env.npm_package_config_useragent || "nodejs - node-zdf-api-client";
 
 
 class ZDFApi extends EventEmitter {
@@ -99,7 +99,7 @@ class ZDFApi extends EventEmitter {
                 pass: api.secret
             },
             headers: {
-                'User-Agent': useragentstring,
+                'User-Agent': USERAGENT,
             },
             form: {
                 'token': token.access_token
@@ -125,7 +125,7 @@ class ZDFApi extends EventEmitter {
                 pass: api.secret
             },
             headers: {
-                'User-Agent': useragentstring,
+                'User-Agent': USERAGENT,
             },            
             form: {
                 'grant_type': 'client_credentials'
