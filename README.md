@@ -6,7 +6,7 @@ The library is useful for incorporating API Token Lifecycle Management into a pr
 ## Install
 
 ```bash
-npm install git+https://github.com/werty1st/node-zdf-api-client.git#2.0
+npm install git+https://github.com/werty1st/node-zdf-api-client.git#2.0.1
 ```
 
 The module will be installed and added to the package.json.
