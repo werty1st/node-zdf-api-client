@@ -1,10 +1,10 @@
-import request from 'request-promise-native';
-import fs from 'fs';
-import moment from "moment";
-import schedule from 'node-schedule';
-import EventEmitter from 'events';
+import * as request from 'request-promise-native';
+import * as fs from 'fs';
+import * as moment from "moment";
+import * as schedule from 'node-schedule';
+import * as EventEmitter from 'events';
 
-import winston from 'winston';
+import * as winston from 'winston';
 
 const log = winston.createLogger({
     exitOnError: true,

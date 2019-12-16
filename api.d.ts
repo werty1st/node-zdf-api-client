@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import EventEmitter from 'events';
+import * as EventEmitter from 'events';
 interface Token {
     token_type: string;
     expires_in: number;

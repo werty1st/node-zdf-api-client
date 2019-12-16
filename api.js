@@ -7,12 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import request from 'request-promise-native';
-import fs from 'fs';
-import moment from "moment";
-import schedule from 'node-schedule';
-import EventEmitter from 'events';
-import winston from 'winston';
+import * as request from 'request-promise-native';
+import * as fs from 'fs';
+import * as moment from "moment";
+import * as schedule from 'node-schedule';
+import * as EventEmitter from 'events';
+import * as winston from 'winston';
 const log = winston.createLogger({
     exitOnError: true,
     transports: [
