@@ -1,27 +1,31 @@
 {
   "name": "node-zdf-api-client",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "",
   "main": "api.js",
   "config": {
     "useragent": "request (nodejs) - node-zdf-api-client (2.0)"
   },
+  "scripts": {
+    "build": "tsc"
+  },
   "directories": {
     "test": "test"
-  },
-  "scripts": {
-    "test": "apiclient=${npm_config_apiclient} apisecret=${npm_config_apisecret} apihost=${npm_config_apihost} mocha"
   },
   "author": "Ronny Adams",
   "license": "ISC",
   "dependencies": {
-    "moment": "^2.22.2",
-    "node-schedule": "^1.2.0",
+    "moment": "^2.24.0",
+    "node-schedule": "^1.3.2",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.5",
-    "winston": "^2.3.1"
+    "request-promise-native": "^1.0.8",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "@types/node": "^12.12.18",
+    "@types/node-schedule": "^1.2.4",
+    "@types/request": "^2.48.3",
+    "@types/request-promise-native": "^1.0.17",
+    "typescript": "^3.7.3"
   }
 }
