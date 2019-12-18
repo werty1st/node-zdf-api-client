@@ -1,12 +1,12 @@
 /// <reference types="node" />
-import * as EventEmitter from 'events';
+import EventEmitter from 'events';
 interface Token {
     token_type: string;
     expires_in: number;
     access_token: string;
     outdatedAt: Date | string;
 }
-declare class ZDFApi extends EventEmitter {
+export default class ZDFApi extends EventEmitter {
     private api;
     RefreshTask: any;
     constructor(client: string, secret: string, apihost: string);
@@ -19,4 +19,5 @@ declare class ZDFApi extends EventEmitter {
     stopTokenRefreshTask(): void;
     createTokenRefreshTask(token: Token): void;
 }
-export default ZDFApi;
+export {};
+//# sourceMappingURL=api.d.ts.map

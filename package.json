@@ -9,9 +9,7 @@
   "scripts": {
     "build": "tsc"
   },
-  "directories": {
-    "test": "test"
-  },
+  "type": "module",
   "author": "Ronny Adams",
   "license": "ISC",
   "dependencies": {
