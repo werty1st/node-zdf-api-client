@@ -21,25 +21,21 @@ const log = winston.createLogger({
 
 const USERAGENT = process.env.npm_package_config_useragent || "nodejs - node-zdf-api-client";
 
-interface Token {
+export interface IToken {
     token_type: string
     expires_in: number
     access_token: string
     outdatedAt: Date | string
+    [propName: string]: any
 }
 
-interface ApiCred {
-    client: string,
-    secret: string,
-    host: string,
-    token: Promise<any>
-}
+export class ZDFApi extends EventEmitter {
 
-
-
-export default class ZDFApi extends EventEmitter {
-
-    private api:ApiCred;
+    private client: string
+    private secret: string
+    private host: string
+    private _token: Promise<IToken>
+    
     RefreshTask: any;
 
     constructor(client:string, secret:string, apihost:string){
@@ -49,34 +45,32 @@ export default class ZDFApi extends EventEmitter {
         if ( secret == "") throw new Error(`invalid client secret`);
         if ( apihost == "") throw new Error(`invalid api host`);
 
-        this.api = {
-            client: client,
-            secret: secret,
-            host: apihost,
-            //try restore from file
-            token: this.loadTokenFile() //retuns promise
-        };
+        this.client  = client 
+        this.secret  = secret 
+        this.host = apihost
+
+        //try restore from file
+        this._token = this.loadTokenFile() //retuns promise
         
     }
 
     //event version
-    publishTokenE(token:Token){
+    publishTokenE(token:IToken){
         this.emit("token-ready",token);
     }
 
     //getter version
     get token(){
-        return this.api.token; //return token promise
+        return this._token; //return token promise
     }
 
     
 
 
     async loadTokenFile(){
-        const api = this.api;
-        let filename = api.host + ".token.json";
-        let oldtokenstring: string;
-        let oldtoken:Token;
+        
+        let filename = this.host + ".token.json";
+        let oldtoken:IToken;
         let oldtokenvalid = false;
 
         if (fs.existsSync(filename)){
@@ -84,9 +78,9 @@ export default class ZDFApi extends EventEmitter {
             //have old token but verify it
             log.verbose("Using cached Token");
             try {
-
-                oldtokenstring = fs.readFileSync(filename, 'utf8');
-                oldtoken = JSON.parse(oldtokenstring);                
+                oldtoken = JSON.parse(
+                    fs.readFileSync(filename, 'utf8')
+                );                
                 oldtokenvalid = await this.verifyToken( oldtoken );
     
                 if (oldtokenvalid === true) {
@@ -113,16 +107,15 @@ export default class ZDFApi extends EventEmitter {
     
     }
 
-    async verifyToken(token: Token){
-        const api = this.api;
+    async verifyToken(token: IToken){
 
         //part1
         return await request({
-            url: `https://${api.host}/oauth/validate`,
+            url: `https://${this.host}/oauth/validate`,
             method: 'POST',
             auth: {
-                user: api.client,
-                pass: api.secret
+                user: this.client,
+                pass: this.secret
             },
             headers: {
                 'User-Agent': USERAGENT,
@@ -139,16 +132,15 @@ export default class ZDFApi extends EventEmitter {
 
 
     async requestNewToken(){
-        const api = this.api;
         
         log.verbose("request new Token");
 
         let result = await request({
-            url: `https://${api.host}/oauth/token`,
+            url: `https://${this.host}/oauth/token`,
             method: 'POST',
             auth: {
-                user: api.client,
-                pass: api.secret
+                user: this.client,
+                pass: this.secret
             },
             headers: {
                 'User-Agent': USERAGENT,
@@ -175,9 +167,8 @@ export default class ZDFApi extends EventEmitter {
         }
     }
 
-    saveTokenFile(token: Token){
-        const api = this.api;
-        let filename = api.host + ".token.json";       
+    saveTokenFile(token: IToken){
+        let filename = this.host + ".token.json";       
 
         fs.writeFile(filename, JSON.stringify(token), function(err: any) {
             if(err) {
@@ -196,8 +187,7 @@ export default class ZDFApi extends EventEmitter {
         }        
     }
 
-    createTokenRefreshTask(token: Token){
-        const api = this.api;
+    createTokenRefreshTask(token: IToken){
 
         this.stopTokenRefreshTask();
         
@@ -206,7 +196,7 @@ export default class ZDFApi extends EventEmitter {
 
         //create Token refresh Task
         this.RefreshTask = schedule.scheduleJob(outdatedAt, () => {
-            api.token = this.requestNewToken(); //overwrite old promise with new one
+            this._token = this.requestNewToken(); //overwrite old promise with new one
         });
 
         log.debug("createdRefreshTask");

@@ -1,23 +1,26 @@
 /// <reference types="node" />
 import EventEmitter from 'events';
-interface Token {
+export interface IToken {
     token_type: string;
     expires_in: number;
     access_token: string;
     outdatedAt: Date | string;
+    [propName: string]: any;
 }
-export default class ZDFApi extends EventEmitter {
-    private api;
+export declare class ZDFApi extends EventEmitter {
+    private client;
+    private secret;
+    private host;
+    private _token;
     RefreshTask: any;
     constructor(client: string, secret: string, apihost: string);
-    publishTokenE(token: Token): void;
-    get token(): Promise<any>;
+    publishTokenE(token: IToken): void;
+    get token(): Promise<IToken>;
     loadTokenFile(): Promise<any>;
-    verifyToken(token: Token): Promise<boolean>;
+    verifyToken(token: IToken): Promise<boolean>;
     requestNewToken(): Promise<any>;
-    saveTokenFile(token: Token): void;
+    saveTokenFile(token: IToken): void;
     stopTokenRefreshTask(): void;
-    createTokenRefreshTask(token: Token): void;
+    createTokenRefreshTask(token: IToken): void;
 }
-export {};
 //# sourceMappingURL=api.d.ts.map
